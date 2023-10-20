@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
-import "./style.css"
+import "./style.css";
+import { useState } from "react";
 
-function NavBar() {
+function NavBar({cart}) {
   return (
     <div className="nav">
-      <h3>Cart</h3>
+      <h3>Cart {cart[0].count}</h3>
       <h3>SHOPPING CART</h3>
       <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/shop">Shop</Link></li>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/shop">Shop</Link>
+        </li>
       </ul>
     </div>
   );

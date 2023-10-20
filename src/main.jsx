@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { NavBar, Main } from "./components/home";
-import { Products } from "./components/shop";
+import { Products, Cart } from "./components/shop";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <>
-        <NavBar />
+        <Cart />
         <Main />
       </>
     ),
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     path: "/shop",
     element: (
       <>
-        <NavBar />
+        <Cart />
         <Products />
       </>
     ),

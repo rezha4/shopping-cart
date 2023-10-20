@@ -1,5 +1,20 @@
 import "./style.css";
 import { useEffect, useState } from "react";
+import { NavBar } from "./home";
+
+function Cart() {
+  const [cart, setCart] = useState([
+    {
+      count: "LMAO LMFAO",
+    }
+  ]);
+
+  return (
+    <>
+    <NavBar cart={cart} />
+    </>
+  )
+}
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -26,4 +41,4 @@ function Products() {
   );
 }
 
-export { Products };
+export { Products, Cart };
