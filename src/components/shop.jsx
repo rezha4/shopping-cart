@@ -4,11 +4,7 @@ import { NavBar } from "./home";
 import { useLocation } from "react-router-dom";
 
 function Cart() {
-  const [cart, setCart] = useState([
-    {
-      count: 7,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
 
   const [products, setProducts] = useState([]);
 
@@ -30,9 +26,16 @@ function Cart() {
       count,
     };
 
-    updatedCart.push(productObject);
+    const duplicate = updatedCart.find((item) => item.id === productObject.id);
+
+    if (duplicate) {
+      duplicate.count++;
+    } else {
+      updatedCart.push(productObject);
+    }
+
     setCart(updatedCart);
-    console.log(updatedCart)
+    console.log(updatedCart);
   }
 
   const location = useLocation();
@@ -56,10 +59,10 @@ function Products({ products, addToCart }) {
             <img src={product.image} alt={product.title} />
             <h4>{product.title}</h4>
             <span className="buttons">
-              <button>-</button>
-              <h4>1</h4>
-              <button>+</button>
-              <button onClick={addToCart}>Add to Cart</button>
+              {/* <button>-</button> */}
+              {/* <h4>1</h4> */}
+              {/* <button>+</button> */}
+              <button onClick={() => addToCart(product)}>Add to Cart</button>
             </span>
           </div>
         );
