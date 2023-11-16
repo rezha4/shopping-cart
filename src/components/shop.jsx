@@ -1,6 +1,7 @@
 import "./style.css";
 import { useEffect, useState } from "react";
 import { NavBar } from "./home";
+import { useLocation } from "react-router-dom";
 
 function Cart() {
   const [cart, setCart] = useState([
@@ -9,14 +10,6 @@ function Cart() {
     },
   ]);
 
-  return (
-    <>
-      <NavBar cart={cart.length} />
-    </>
-  );
-}
-
-function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -26,6 +19,35 @@ function Products() {
       .catch((err) => console.error(err));
   }, []);
 
+  function addToCart(product) {
+    const updatedCart = [...cart];
+    const { id, title } = product;
+    const count = 1;
+
+    const productObject = {
+      id,
+      title,
+      count,
+    };
+
+    updatedCart.push(productObject);
+    setCart(updatedCart);
+    console.log(updatedCart)
+  }
+
+  const location = useLocation();
+
+  const isShopRoute = location.pathname === "/shop";
+
+  return (
+    <>
+      <NavBar cart={cart.length} />
+      {isShopRoute && <Products products={products} addToCart={addToCart} />}
+    </>
+  );
+}
+
+function Products({ products, addToCart }) {
   return (
     <div className="products">
       {products.map((product) => {
@@ -35,9 +57,9 @@ function Products() {
             <h4>{product.title}</h4>
             <span className="buttons">
               <button>-</button>
-              <h4>0</h4>
+              <h4>1</h4>
               <button>+</button>
-              <button>Add to Cart</button>
+              <button onClick={addToCart}>Add to Cart</button>
             </span>
           </div>
         );
