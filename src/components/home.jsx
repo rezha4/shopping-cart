@@ -5,7 +5,7 @@ import { useState } from "react";
 function NavBar({cart}) {
   return (
     <div className="nav">
-      <h3>Cart {cart[0].count}</h3>
+      <h3>Cart {cart}</h3>
       <h3>SHOPPING CART</h3>
       <ul>
         <li>

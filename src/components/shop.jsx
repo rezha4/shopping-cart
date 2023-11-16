@@ -5,15 +5,15 @@ import { NavBar } from "./home";
 function Cart() {
   const [cart, setCart] = useState([
     {
-      count: "LMAO LMFAO",
-    }
+      count: 7,
+    },
   ]);
 
   return (
     <>
-    <NavBar cart={cart} />
+      <NavBar cart={cart.length} />
     </>
-  )
+  );
 }
 
 function Products() {
@@ -31,9 +31,14 @@ function Products() {
       {products.map((product) => {
         return (
           <div key={product.id}>
-            <img src={product.image} alt={product.title}></img>
-            <h1>{product.title}</h1>
-            <p>{product.description}</p>
+            <img src={product.image} alt={product.title} />
+            <h4>{product.title}</h4>
+            <span className="buttons">
+              <button>-</button>
+              <h4>0</h4>
+              <button>+</button>
+              <button>Add to Cart</button>
+            </span>
           </div>
         );
       })}
