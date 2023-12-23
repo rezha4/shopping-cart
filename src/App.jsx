@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Shop from "./pages/Shop";
 import Navbar from "./pages/Navbar";
+import Cart from "./pages/Cart";
 import "./index.css";
 
 const App = () => {
@@ -9,17 +10,33 @@ const App = () => {
 
   const addItem = (item) => {
     const newCart = [...cart];
-    newCart.push(item);
-    setCart(newCart);
-    console.log(cart);
-  };
-
-  const reduceItem = () => {
-    const newCart = [...cart];
-    if (newCart.length > 0) {
-      newCart.pop();
+    const itemIndex = newCart.findIndex(
+      (currentItem) => item.id === currentItem.id
+    );
+    if (itemIndex !== -1) {
+      newCart[itemIndex].count += 1;
+    } else {
+      newCart.push({
+        id: item.id,
+        title: item.title,
+        count: 1,
+        price: item.price,
+      });
     }
     setCart(newCart);
+  };
+
+  const reduceItem = (item) => {
+    const itemIndex = cart.findIndex(
+      (currentItem) => item.id === currentItem.id
+    );
+    if (itemIndex !== -1) {
+      const newCart = [...cart];
+      newCart[itemIndex].count == 1
+        ? newCart.splice(itemIndex, 1)
+        : (newCart[itemIndex].count -= 1);
+      setCart(newCart);
+    }
   };
 
   useEffect(() => {
@@ -37,7 +54,8 @@ const App = () => {
   return (
     <>
       <Navbar cart={cart} />
-      <Shop addItem={addItem} reduceItem={reduceItem} items={items}/>
+      <Shop addItem={addItem} reduceItem={reduceItem} items={items} />
+      <Cart cart={cart} />
     </>
   );
 };

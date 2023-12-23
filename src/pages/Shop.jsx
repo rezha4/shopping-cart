@@ -15,7 +15,7 @@ const Shop = (props) => {
 
               <button
                 className="bg-blue-500 m-2 p-2 rounded-md text-white active:bg-blue-700"
-                onClick={() => props.reduceItem()}
+                onClick={() => props.reduceItem(item)}
               >
                 Minus --
               </button>
