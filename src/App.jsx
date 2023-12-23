@@ -3,6 +3,7 @@ import Shop from "./pages/Shop";
 import Navbar from "./pages/Navbar";
 import Cart from "./pages/Cart";
 import "./index.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
   const [cart, setCart] = useState([]);
@@ -52,11 +53,39 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <Navbar cart={cart} />
-      <Shop addItem={addItem} reduceItem={reduceItem} items={items} />
-      <Cart cart={cart} />
-    </>
+    <div className="bg-yellow-50">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar cart={cart} />
+                <p>hello</p>
+              </>
+            }
+          />
+          <Route
+            path="/shop"
+            element={
+              <>
+                <Navbar cart={cart} />
+                <Shop addItem={addItem} reduceItem={reduceItem} items={items} />
+              </>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <>
+                <Navbar cart={cart} />
+                <Cart cart={cart} />
+              </>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };
 
