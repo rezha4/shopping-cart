@@ -4,10 +4,10 @@ const Cart = (props) => {
       <h1>cart</h1>
       {props.cart.map((cartItem, index) => (
         <div key={index}>
-            <p>{cartItem.id}</p>
+          <p>{cartItem.id}</p>
           <h1>{cartItem.title}</h1>
-          <p>{cartItem.count}</p>
-          <p>{cartItem.price}</p>
+          <p>Count: {cartItem.count}</p>
+          <p>Price: {cartItem.price}</p>
         </div>
       ))}
     </>

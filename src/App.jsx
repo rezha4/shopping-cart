@@ -9,7 +9,7 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [items, setItems] = useState([]);
 
-  const addItem = (item) => {
+  const addItem = (item, count) => {
     const newCart = [...cart];
     const itemIndex = newCart.findIndex(
       (currentItem) => item.id === currentItem.id
@@ -20,7 +20,7 @@ const App = () => {
       newCart.push({
         id: item.id,
         title: item.title,
-        count: 1,
+        count,
         price: item.price,
       });
     }
@@ -53,7 +53,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="bg-yellow-50">
+    <div>
       <BrowserRouter>
         <Routes>
           <Route
