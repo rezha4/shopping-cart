@@ -4,39 +4,31 @@ import Navbar from "./pages/Navbar";
 import Cart from "./pages/Cart";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Item } from "./pages/Item";
 
 const App = () => {
   const [cart, setCart] = useState([]);
   const [items, setItems] = useState([]);
 
-  const addItem = (item, count) => {
+  const handleAddToCart = (item) => {
     const newCart = [...cart];
-    const itemIndex = newCart.findIndex(
-      (currentItem) => item.id === currentItem.id
-    );
-    if (itemIndex !== -1) {
-      newCart[itemIndex].count += 1;
-    } else {
-      newCart.push({
-        id: item.id,
-        title: item.title,
-        count,
-        price: item.price,
-      });
-    }
+    newCart.push(item);
     setCart(newCart);
+  }
+
+  const handleIncrement = (index) => {
+    const updatedItems = [...items];
+    updatedItems[index].quantity += 1;
+    setItems(updatedItems);
   };
 
-  const reduceItem = (item) => {
-    const itemIndex = cart.findIndex(
-      (currentItem) => item.id === currentItem.id
-    );
-    if (itemIndex !== -1) {
-      const newCart = [...cart];
-      newCart[itemIndex].count == 1
-        ? newCart.splice(itemIndex, 1)
-        : (newCart[itemIndex].count -= 1);
-      setCart(newCart);
+  const handleDecrement = (index) => {
+    const updatedItems = [...items];
+    if (updatedItems[index].quantity <= 0) {
+      return;
+    } else {
+      updatedItems[index].quantity -= 1;
+      setItems(updatedItems);
     }
   };
 
@@ -48,8 +40,14 @@ const App = () => {
         }
         return res.json();
       })
-      .then((res) => setItems(res))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        const itemsWithQuantity = res.map((item) => ({
+          ...item,
+          quantity: 0,
+        }));
+        setItems(itemsWithQuantity);
+      })
+      .catch((err) => console.error(err)).finally(() => console.log(items));
   }, []);
 
   return (
@@ -61,7 +59,6 @@ const App = () => {
             element={
               <>
                 <Navbar cart={cart} />
-                <p>hello</p>
               </>
             }
           />
@@ -70,7 +67,7 @@ const App = () => {
             element={
               <>
                 <Navbar cart={cart} />
-                <Shop addItem={addItem} reduceItem={reduceItem} items={items} />
+                <Shop cart={cart} handleAddToCart={handleAddToCart} handleIncrement={handleIncrement} handleDecrement={handleDecrement} items={items} />
               </>
             }
           />
@@ -83,6 +80,15 @@ const App = () => {
               </>
             }
           />
+          {/* <Route
+            path="/shop/:id"
+            element={
+              <>
+                <Navbar cart={cart} />
+                <Item cart={cart} handleIncrement={handleIncrement} handleDecrement={handleDecrement} items={items} />
+              </>
+            }
+          /> */}
         </Routes>
       </BrowserRouter>
     </div>

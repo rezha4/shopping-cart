@@ -1,14 +1,16 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
-  const itemsCount = props.cart?.reduce((acc, curr) => {
-    return acc + curr.count;
-  }, 0);
-
   return (
     <div className="flex justify-center gap-20 py-6 items-center bg-yellow-400">
       <Link to={"/cart"}>
-        <h2 className="text-2xl font-bold">Your Cart: {itemsCount}</h2>
+        <h2 className="text-2xl font-bold">
+          Your Cart:{" "}
+          {props.cart?.reduce((acc, curr) => {
+            return acc + curr.quantity;
+          }, 0)}
+        </h2>
       </Link>
       <Link to={"/"}>
         <h1 className="text-4xl font-semibold">
