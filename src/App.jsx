@@ -5,6 +5,8 @@ import Cart from "./pages/Cart";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Item } from "./pages/Item";
+import Home from "./pages/Home";
+import Footer from "./pages/Footer";
 
 const App = () => {
   const [cart, setCart] = useState([]);
@@ -16,22 +18,6 @@ const App = () => {
     setCart(newCart);
   }
 
-  const handleIncrement = (index) => {
-    const updatedItems = [...items];
-    updatedItems[index].quantity += 1;
-    setItems(updatedItems);
-  };
-
-  const handleDecrement = (index) => {
-    const updatedItems = [...items];
-    if (updatedItems[index].quantity <= 0) {
-      return;
-    } else {
-      updatedItems[index].quantity -= 1;
-      setItems(updatedItems);
-    }
-  };
-
   useEffect(() => {
     fetch("https://fakestoreapi.com/products/", { mode: "cors" })
       .then((res) => {
@@ -41,11 +27,11 @@ const App = () => {
         return res.json();
       })
       .then((res) => {
-        const itemsWithQuantity = res.map((item) => ({
-          ...item,
-          quantity: 0,
-        }));
-        setItems(itemsWithQuantity);
+        // const itemsWithQuantity = res.map((item) => ({
+        //   ...item,
+        //   quantity: 0,
+        // }));
+        setItems(res);
       })
       .catch((err) => console.error(err)).finally(() => console.log(items));
   }, []);
@@ -59,6 +45,8 @@ const App = () => {
             element={
               <>
                 <Navbar cart={cart} />
+                <Home />
+                <Footer />
               </>
             }
           />
@@ -67,7 +55,7 @@ const App = () => {
             element={
               <>
                 <Navbar cart={cart} />
-                <Shop cart={cart} handleAddToCart={handleAddToCart} handleIncrement={handleIncrement} handleDecrement={handleDecrement} items={items} />
+                <Shop cart={cart} setCart={setCart} handleAddToCart={handleAddToCart} items={items} />
               </>
             }
           />
@@ -76,7 +64,7 @@ const App = () => {
             element={
               <>
                 <Navbar cart={cart} />
-                <Cart cart={cart} />
+                <Cart cart={cart} setCart={setCart} />
               </>
             }
           />
