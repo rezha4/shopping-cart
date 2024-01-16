@@ -19,7 +19,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products/", { mode: "cors" })
+    fetch("https://fakestoreapi.com/products/", { mode: "no-cors" })
       .then((res) => {
         if (res.status >= 400) {
           console.error("server error");
